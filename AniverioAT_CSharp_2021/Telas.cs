@@ -11,128 +11,43 @@ namespace AniverioAT_CSharp_2021
         public static void MenuPrincipal()
         {
             Console.Clear();
-            Console.WriteLine("Aniversariantes diarios!");
-            Console.WriteLine("-------------------------------------------");
+            Console.WriteLine("Aniversariantes do dia!");
+            Console.WriteLine("*************************************");
             AniversarianteDoDia();
-            Console.WriteLine("-------------------------------------------");
-            Console.WriteLine("Escolha uma das opcoes abaixo: ");
-            Console.WriteLine("1 - Pesquisar Pessoa ");
-            Console.WriteLine("2 - Adicionar Pessoas ");
-            Console.WriteLine("3 - Editar Pessoa ");
-            Console.WriteLine("4 - Deletar ");            
-            Console.WriteLine("5 - Sair ");
+            Console.WriteLine("*************************************");
+            Console.WriteLine("Escolha uma das opcões: ");
+            Console.WriteLine("1 -> Adicionar Pessoa ");
+            Console.WriteLine("2 -> Pesquisar Pessoa ");
+            Console.WriteLine("3 -> Editar Pessoa ");
+            Console.WriteLine("4 -> Deletar Pessoa ");
+            Console.WriteLine("5 -> Mostrar todas as Pessoas ");
+            Console.WriteLine("6 -> Sair ");
             int opcao = int.Parse(Console.ReadLine());
 
             switch (opcao)
             {
                 case 1:
-                    BuscaPessoa();
+                    CadastrarPessoa();
                     break;
                 case 2:
-                    CadastrarPessoa();
+                    BuscaPessoa();                    
                     break;
                 case 3:
                     EditarPessoa();
                     break;
                 case 4:
                     DeletarPessoa();
-                    break;                
+                    break;
                 case 5:
-                    Console.WriteLine("Tchau Amigao!");
+                    MostrarPessoa();
+                    break;
+                case 6:
+                    Console.WriteLine("Ate mais!");
                     break;
                 default:
-                    Console.WriteLine("Opcao errada amigao!");
+                    Console.WriteLine("Opcão inválida!");
                     break;
             }
-        }
-        
-
-        private static void DeletarPessoa()
-        {
-            Console.Clear();
-            Console.WriteLine("Entre com o nome da pessoa que deseja deletar:");
-            string[] nomeESobrenome = Console.ReadLine().Split(' ');
-            string nome = nomeESobrenome[0];
-
-            var listaDePessoasEncontradas = Repositorio.BuscarTodasPessoas(nome);
-
-            if (listaDePessoasEncontradas.Count() == 0)
-            {
-                Console.WriteLine("Nenhum usuario Encontrado");
-            }
-            else
-            {
-                Console.WriteLine("");
-                Console.WriteLine("Pesssoas Encontradas: ");
-                foreach (var pessoa in listaDePessoasEncontradas)
-                {
-                    Console.WriteLine(pessoa.Id + " - " + pessoa.nome + " " + pessoa.sobreNome);
-                }
-
-
-                Console.WriteLine("Digite o numero correspondente a pessoa que deseja deletar: ");
-                int escolha = int.Parse(Console.ReadLine());
-
-                foreach (var pessoa in listaDePessoasEncontradas)
-                {
-                    if (pessoa.Id == escolha)
-                    {
-                        Repositorio.Deletar(escolha);
-                        Console.WriteLine("Pessoa deletada!");
-                    }
-                }
-            }
-            VoltarProMenu();
-        }
-
-        private static void EditarPessoa()
-        {
-            Console.Clear();
-            Console.WriteLine("Entre com o nome da pessoa que deseja editar:");
-            string[] nomeESobrenome = Console.ReadLine().Split(' ');
-            string nome = nomeESobrenome[0];
-
-
-            var listaDePessoasEncontradas = Repositorio.BuscarTodasPessoas(nome);
-
-            if (listaDePessoasEncontradas.Count() == 0)
-            {
-                Console.WriteLine("Nenhum usuario Encontrado");
-            }
-            else
-            {
-                Console.WriteLine("");
-                Console.WriteLine("Pesssoas Encontradas: ");
-
-                foreach (var pessoa in listaDePessoasEncontradas)
-                {
-                    Console.WriteLine(pessoa.Id + " - " + pessoa.nome + " " + pessoa.sobreNome);
-                }
-
-                Console.WriteLine("");
-                Console.WriteLine("Digite o numero correspondente a pessoa que deseja editar: ");
-                int escolha = int.Parse(Console.ReadLine());
-
-                foreach (var pessoa in listaDePessoasEncontradas)
-                {
-                    if (pessoa.Id == escolha)
-                    {
-                        Pessoa pessoaVelha = Repositorio.BuscarPessoaPorId(escolha);
-                        Console.WriteLine("Entre com o novo nome do meliante: ");
-                        String nomeT = Console.ReadLine();
-                        Console.WriteLine("Entre com o novo Sobrenome do meliante: ");
-                        String sobrenomeT = Console.ReadLine();
-                        DateTime aniversarioN = RecebeETransformaData();
-
-                        Pessoa pessoaNova = new Pessoa(pessoaVelha.Id, nomeT, sobrenomeT, aniversarioN);
-
-                        Repositorio.Editar(pessoaNova);
-
-                        Console.WriteLine("Pessoa alterada!");
-                    }
-                }
-            }
-            VoltarProMenu();
         }
 
         private static void AniversarianteDoDia()
@@ -141,13 +56,13 @@ namespace AniverioAT_CSharp_2021
             var niverToday = Repositorio.BuscarTodasPessoas(hj);
             if (niverToday.Count() == 0)
             {
-                Console.WriteLine("Nenhum aniversario hj amigao!!");
+                Console.WriteLine("Sem aniversarios hoje!");
             }
             else
             {
                 foreach (var pessoa in niverToday)
                 {
-                    Console.WriteLine(pessoa.Id + " - " + pessoa.nome + " " + pessoa.sobreNome);
+                    Console.WriteLine(pessoa.Id + " - " + pessoa._nome + " " + pessoa._sobreNome);
                 }
             }
         }
@@ -156,9 +71,9 @@ namespace AniverioAT_CSharp_2021
         {
             Console.Clear();
 
-            Console.WriteLine("Entre com o nome: ");
+            Console.WriteLine("Digite o nome: ");
             String nome = Console.ReadLine();
-            Console.WriteLine("Entre com o sobre nome: ");
+            Console.WriteLine("Digite o sobrenome: ");
             String sobreNome = Console.ReadLine();
 
             DateTime aniversarioD = RecebeETransformaData();
@@ -175,11 +90,11 @@ namespace AniverioAT_CSharp_2021
 
             Console.WriteLine(p);
             Console.WriteLine("");
-            Console.WriteLine("Esta tudo certo com a adicao? (s/n) ");
+            Console.WriteLine("Os dados estao corretos? Sim(s)/Não(n)");
             string opcao = Console.ReadLine();
             if (opcao == "s")
             {
-                Console.WriteLine("Ok, adicionando pessoa...");
+                Console.WriteLine("Adicionando pessoa...");
                 Repositorio.Salvar(p);
             }
             else
@@ -189,32 +104,10 @@ namespace AniverioAT_CSharp_2021
             VoltarProMenu();
         }
 
-        public static DateTime RecebeETransformaData()
-        {
-            Console.WriteLine("Entre com a data de nascimento em dd/mm/yyyy: ");
-            string data = Console.ReadLine();
-
-            DateTime dataC = new DateTime();
-            if (data.Contains("/"))
-            {
-                string[] vet = data.Split('/');
-                int ano = int.Parse(vet[2]);
-                int mes = int.Parse(vet[1]);
-                int dia = int.Parse(vet[0]);
-                dataC = new DateTime(ano, mes, dia);
-            }
-            else
-            {
-                Console.WriteLine("Entre com uma data valida por favor.");
-                VoltarProMenu();
-            }
-            return dataC;
-        }
-
         public static void BuscaPessoa()
         {
             Console.Clear();
-            Console.WriteLine("Entre com o nome da pessoa que deseja buscar:");
+            Console.WriteLine("Digite o nome da pessoa que deseja buscar:");
             string[] nomeESobrenome = Console.ReadLine().Split(' ');
             string nome = nomeESobrenome[0];
 
@@ -223,7 +116,7 @@ namespace AniverioAT_CSharp_2021
 
             if (listaDePessoasEncontradas.Count() == 0)
             {
-                Console.WriteLine("Nenhum usuario Encontrado");
+                Console.WriteLine("Nenhuma pessoa encontrada!!");
             }
             else
             {
@@ -232,11 +125,11 @@ namespace AniverioAT_CSharp_2021
 
                 foreach (var pessoa in listaDePessoasEncontradas)
                 {
-                    Console.WriteLine(pessoa.Id + " - " + pessoa.nome + " " + pessoa.sobreNome);
+                    Console.WriteLine(pessoa.Id + " - " + pessoa._nome + " " + pessoa._sobreNome);
                 }
 
                 Console.WriteLine("");
-                Console.WriteLine("Digite o numero correspondente a pessoa que deseja ter mais detalhes: ");
+                Console.WriteLine("Digite o numero ID correspondente para ver mais detalhes: ");
                 int escolha = int.Parse(Console.ReadLine());
 
                 foreach (var pessoa in listaDePessoasEncontradas)
@@ -252,17 +145,151 @@ namespace AniverioAT_CSharp_2021
 
         }
 
+        private static void EditarPessoa()
+        {
+            Console.Clear();
+            Console.WriteLine("Digite o nome da pessoa que deseja editar:");
+            string[] nomeESobrenome = Console.ReadLine().Split(' ');
+            string nome = nomeESobrenome[0];
+
+
+            var listaDePessoasEncontradas = Repositorio.BuscarTodasPessoas(nome);
+
+            if (listaDePessoasEncontradas.Count() == 0)
+            {
+                Console.WriteLine("Nenhuma pessoa encontrada!");
+            }
+            else
+            {
+                Console.WriteLine("");
+                Console.WriteLine("Pesssoas encontradas: ");
+
+                foreach (var pessoa in listaDePessoasEncontradas)
+                {
+                    Console.WriteLine(pessoa.Id + " - " + pessoa._nome + " " + pessoa._sobreNome);
+                }
+
+                Console.WriteLine("");
+                Console.WriteLine("Digite o numero correspondente a pessoa que deseja editar: ");
+                int escolha = int.Parse(Console.ReadLine());
+
+                foreach (var pessoa in listaDePessoasEncontradas)
+                {
+                    if (pessoa.Id == escolha)
+                    {
+                        Pessoa pessoaVelha = Repositorio.BuscarPessoaPorId(escolha);
+                        Console.WriteLine("Digite o novo nome: ");
+                        String nomeT = Console.ReadLine();
+                        Console.WriteLine("Digite o novo Sobrenome: ");
+                        String sobrenomeT = Console.ReadLine();
+                        DateTime aniversarioN = RecebeETransformaData();
+
+                        Pessoa pessoaNova = new Pessoa(pessoaVelha.Id, nomeT, sobrenomeT, aniversarioN);
+
+                        Repositorio.Editar(pessoaNova);
+
+                        Console.WriteLine("Pessoa alterada!");
+                    }
+                }
+            }
+            VoltarProMenu();
+        }
+
+        private static void DeletarPessoa()
+        {
+            Console.Clear();
+            Console.WriteLine("Digite o nome da pessoa que deseja excluir:");
+            string[] nomeESobrenome = Console.ReadLine().Split(' ');
+            string nome = nomeESobrenome[0];
+
+            var listaDePessoasEncontradas = Repositorio.BuscarTodasPessoas(nome);
+
+            if (listaDePessoasEncontradas.Count() == 0)
+            {
+                Console.WriteLine("Nenhuma pessoa encontrada");
+            }
+            else
+            {
+                Console.WriteLine("");
+                Console.WriteLine("Pesssoas Encontradas: ");
+                foreach (var pessoa in listaDePessoasEncontradas)
+                {
+                    Console.WriteLine(pessoa.Id + " - " + pessoa._nome + " " + pessoa._sobreNome);
+                }
+
+
+                Console.WriteLine("Digite o numero correspondente a pessoa que deseja excluir: ");
+                int escolha = int.Parse(Console.ReadLine());
+
+                foreach (var pessoa in listaDePessoasEncontradas)
+                {
+                    if (pessoa.Id == escolha)
+                    {
+                        Repositorio.Deletar(escolha);
+                        Console.WriteLine("Pessoa excluída!");
+                    }
+                }
+            }
+            VoltarProMenu();
+        }
+
+        
+        public static void MostrarPessoa()
+        {
+            Console.Clear();
+            var p = new Repositorio();
+
+            if (p != null)
+            {
+                Console.WriteLine("");
+                Console.WriteLine("Lista de amigos!");
+                Console.WriteLine("-------------------------------------------");
+                Console.WriteLine("");
+                foreach (var pessoa in Repositorio.BuscarTodasPessoas())
+                {
+                    Console.WriteLine(" - " + pessoa._nome + " , " + pessoa._sobreNome + " aniversaria em: " + pessoa._birth);
+                }
+            }
+            else
+                Console.WriteLine("Ops, parece que nimguem foi cadastrado ainda!");
+            Console.WriteLine(" ");
+            VoltarProMenu();
+        }
+
+        //                 ---METODOS USUAIS---
+        public static DateTime RecebeETransformaData()
+        {
+            Console.WriteLine("Digite a data de nascimento no formato dd/mm/yyyy: ");
+            string data = Console.ReadLine();
+
+            DateTime dataC = new DateTime();
+            if (data.Contains("/"))
+            {
+                string[] vet = data.Split('/');
+                int ano = int.Parse(vet[2]);
+                int mes = int.Parse(vet[1]);
+                int dia = int.Parse(vet[0]);
+                dataC = new DateTime(ano, mes, dia);
+            }
+            else
+            {
+                Console.WriteLine("Por favor, digite no formato dd/mm/yyyy!!!");
+                VoltarProMenu();
+            }
+            return dataC;
+        }       
+
         public static void VoltarProMenu()
         {
-            Console.WriteLine("Aperte x para voltar ao menu.");
+            Console.WriteLine("Aperte V para voltar ao menu.");
             string volta = Console.ReadLine();
-            if (volta == "x")
+            if (volta == "v")
             {
                 MenuPrincipal();
             }
             else
             {
-                Console.WriteLine("Opcao errada amigo!");
+                Console.WriteLine("Opcao invalida!");
                 VoltarProMenu();
             }
         }

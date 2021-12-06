@@ -27,6 +27,10 @@ namespace BibliotecaDeClasses
         string RecebeArquivo();
 
         void CadastrarPessoa(Pessoa pessoa);
+
+        void MostrarPessoas();
+
+        
     }
 }
 

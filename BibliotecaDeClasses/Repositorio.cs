@@ -8,7 +8,7 @@ namespace BibliotecaDeClasses
 {
     public class Repositorio : IRepositorio
     {
-
+        
         public IEnumerable<Pessoa> BuscarTodasPessoas()
         {
             string nomeDoArquivo = RecebeArquivo();
@@ -86,16 +86,16 @@ namespace BibliotecaDeClasses
         public IEnumerable<Pessoa> BuscarTodasPessoas(string nome)
         {
             return (from x in BuscarTodasPessoas()
-                    where x.nome.Contains(nome, StringComparison.InvariantCultureIgnoreCase)
-                    orderby x.nome
+                    where x._nome.Contains(nome, StringComparison.InvariantCultureIgnoreCase)
+                    orderby x._nome
                     select x);
         }
 
         public IEnumerable<Pessoa> BuscarTodasPessoas(DateTime data)
         {
             return (from x in BuscarTodasPessoas()
-                    where x.birth.Day == data.Day && x.birth.Month == data.Month
-                    orderby x.birth
+                    where x._birth.Day == data.Day && x._birth.Month == data.Month
+                    orderby x._birth
                     select x);
         }
 
@@ -118,11 +118,7 @@ namespace BibliotecaDeClasses
 
         public void Salvar(Pessoa pessoa)
         {
-            // if (PessoaExistente(pessoa)) {
-
-            // } else {
             CadastrarPessoa(pessoa);
-            //}
         }
 
         public bool PessoaExistente(Pessoa pessoa)
@@ -163,18 +159,30 @@ namespace BibliotecaDeClasses
         {
             string arquivo = RecebeArquivo();
 
-            string formatacao = $"{pessoa.Id},{pessoa.nome},{pessoa.sobreNome},{pessoa.birth};";
+            string formatacao = $"{pessoa.Id},{pessoa._nome},{pessoa._sobreNome},{pessoa._birth};";
 
             File.AppendAllText(arquivo, formatacao);
         }
-        public static void CadastrarAniversariante(Aniversariante aniversariante)
+
+        public void MostrarPessoas()
         {
+            string arquivo = RecebeArquivo();
 
-            using (StreamWriter sw = File.AppendText(BuscaArquivo()))
+            using (var leArquivo = new StreamReader(arquivo))
             {
-                sw.WriteLine($"{ aniversariante.Nome}, { aniversariante.Sobrenome}, { aniversariante.Nascimento.ToString()}");
-
+                Console.WriteLine(leArquivo.ReadToEnd());
             }
 
+            //public void CadastrarPessoa(Pessoa pessoa)
+            //{
+            //    string arquivo = RecebeArquivo();
+
+            //    using (StreamWriter sw = File.AppendText(arquivo))
+            //    {
+            //        sw.WriteLine($"{pessoa.Id},{pessoa._nome},{pessoa._sobreNome},{pessoa._birth}");
+            //    }
+
+            //}
         }
     }
+}
