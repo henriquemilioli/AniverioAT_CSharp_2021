@@ -62,7 +62,7 @@ namespace BibliotecaDeClasses
             var pasta = Environment.SpecialFolder.Desktop;
 
             string pastaNoDesktop = Environment.GetFolderPath(pasta);
-            string nomeDoArquivo = @"\repositorioPessoas.txt";
+            string nomeDoArquivo = @"\ListaPessoas.txt";
 
             return pastaNoDesktop + nomeDoArquivo;
         }

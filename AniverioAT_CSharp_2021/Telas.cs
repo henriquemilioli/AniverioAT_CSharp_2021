@@ -1,20 +1,35 @@
 ﻿using BibliotecaDeClasses;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace AniverioAT_CSharp_2021
 {
     class Telas
     {
-        public static void MenuPrincipal()
+        public static void ShowSimplePercentage()
         {
-            Console.Clear();
+            for (int i = 0; i <= 100; i++)
+            {
+                Console.Write($"\rProgress: {i}%   ");
+                Thread.Sleep(40);
+            }            
+        }
+        
+        public static void MenuPrincipal()
+        {           
+            Console.Clear();            
             Console.WriteLine("Aniversariantes do dia!");
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("*************************************");
+            Console.ResetColor();
             AniversarianteDoDia();
+            Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("*************************************");
+            Console.ResetColor();
             Console.WriteLine("Escolha uma das opcões: ");
             Console.WriteLine("1 -> Adicionar Pessoa ");
             Console.WriteLine("2 -> Pesquisar Pessoa ");
@@ -45,7 +60,9 @@ namespace AniverioAT_CSharp_2021
                     Console.WriteLine("Ate mais!");
                     break;
                 default:
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Opcão inválida!");
+                    Console.ResetColor();
                     break;
             }
         }
@@ -56,7 +73,9 @@ namespace AniverioAT_CSharp_2021
             var niverToday = Repositorio.BuscarTodasPessoas(hj);
             if (niverToday.Count() == 0)
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Sem aniversarios hoje!");
+                Console.ResetColor();
             }
             else
             {
@@ -90,11 +109,15 @@ namespace AniverioAT_CSharp_2021
 
             Console.WriteLine(p);
             Console.WriteLine("");
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Os dados estao corretos? Sim(s)/Não(n)");
+            Console.ResetColor();
             string opcao = Console.ReadLine();
             if (opcao == "s")
             {
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Adicionando pessoa...");
+                Console.ResetColor();
                 Repositorio.Salvar(p);
             }
             else
@@ -115,7 +138,9 @@ namespace AniverioAT_CSharp_2021
 
             if (listaDePessoasEncontradas.Count() == 0)
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Nenhuma pessoa encontrada!!");
+                Console.ResetColor();
             }
             else
             {
@@ -155,7 +180,9 @@ namespace AniverioAT_CSharp_2021
 
             if (listaDePessoasEncontradas.Count() == 0)
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Nenhuma pessoa encontrada!");
+                Console.ResetColor();
             }
             else
             {
@@ -186,7 +213,9 @@ namespace AniverioAT_CSharp_2021
 
                         Repositorio.Editar(pessoaN);
 
+                        Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("Pessoa alterada!");
+                        Console.ResetColor();
                     }
                 }
             }
@@ -204,11 +233,13 @@ namespace AniverioAT_CSharp_2021
 
             if (listaDePessoasEncontradas.Count() == 0)
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Nenhuma pessoa encontrada");
+                Console.ResetColor();
             }
             else
             {
-                Console.WriteLine("");
+                Console.WriteLine(" ");
                 Console.WriteLine("Pesssoas Encontradas: ");
                 foreach (var pessoa in listaDePessoasEncontradas)
                 {
@@ -224,7 +255,9 @@ namespace AniverioAT_CSharp_2021
                     if (pessoa.Id == escolha)
                     {
                         Repositorio.Deletar(escolha);
+                        Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("Pessoa excluída!");
+                        Console.ResetColor();
                     }
                 }
             }
@@ -239,10 +272,10 @@ namespace AniverioAT_CSharp_2021
 
             if (p != null)
             {
-                Console.WriteLine("");
+                Console.WriteLine(" ");
                 Console.WriteLine("Lista de amigos!");
                 Console.WriteLine("-------------------------------------------");
-                Console.WriteLine("");
+                Console.WriteLine(" ");
                 foreach (var pessoa in Repositorio.BuscarTodasPessoas())
                 {
                     Console.WriteLine(" - " + pessoa._nome + " , " + pessoa._sobreNome + " aniversaria em: " + pessoa._nascimento);
@@ -287,7 +320,9 @@ namespace AniverioAT_CSharp_2021
             }
             else
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Opcao invalida!");
+                Console.ResetColor();
                 VoltarProMenu();
             }
         }

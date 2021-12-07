@@ -6,7 +6,8 @@ namespace AniverioAT_CSharp_2021
     {
         static void Main(string[] args)
         {
-            Telas.MenuPrincipal(); 
+            Telas.ShowSimplePercentage();            
+            Telas.MenuPrincipal();             
         }
     }
 }

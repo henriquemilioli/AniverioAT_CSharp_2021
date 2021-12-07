@@ -26,9 +26,7 @@ namespace BibliotecaDeClasses
 
         Pessoa BuscarPessoaPorId(int id);
 
-        string RecebeArquivo();
-
-        
+        string RecebeArquivo();       
 
         void MostrarPessoas();
         
