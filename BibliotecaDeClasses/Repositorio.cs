@@ -105,7 +105,7 @@ namespace BibliotecaDeClasses
         public IEnumerable<Pessoa> BuscarTodasPessoas(string nome)
         {
             return (from x in BuscarTodasPessoas()
-                    where x._nome.Contains(nome, StringComparison.InvariantCultureIgnoreCase)
+                    where x._nome.Contains(nome, StringComparison.InvariantCultureIgnoreCase) || x._sobreNome.Contains(nome, StringComparison.InvariantCultureIgnoreCase)
                     orderby x._nome
                     select x);
         }        

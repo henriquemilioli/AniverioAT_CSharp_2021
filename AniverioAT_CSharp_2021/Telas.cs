@@ -76,16 +76,16 @@ namespace AniverioAT_CSharp_2021
             Console.WriteLine("Digite o sobrenome: ");
             String sobreNome = Console.ReadLine();
 
-            DateTime aniversarioD = RecebeETransformaData();
+            DateTime DiaAniversario = RecebeETransformaData();
 
             var pessoas = Repositorio.BuscarTodasPessoas();
 
-            Pessoa p = new Pessoa(nome, sobreNome, aniversarioD);
+            Pessoa p = new Pessoa(nome, sobreNome, DiaAniversario);
 
             foreach (var pessoa in pessoas)
             {
-                Pessoa ultimo = pessoas.Last(x => x.Id == pessoa.Id);
-                p.Id = ultimo.Id + 1;
+                Pessoa ultima = pessoas.Last(x => x.Id == pessoa.Id);
+                p.Id = ultima.Id + 1;
             }
 
             Console.WriteLine(p);
@@ -107,10 +107,9 @@ namespace AniverioAT_CSharp_2021
         public static void BuscaPessoa()
         {
             Console.Clear();
-            Console.WriteLine("Digite o nome da pessoa que deseja buscar:");
+            Console.WriteLine("Digite o nome ou sobrenome da pessoa que deseja buscar:");
             string[] nomePessoa = Console.ReadLine().Split(' ');
             string nome = nomePessoa[0];
-
 
             var listaDePessoasEncontradas = Repositorio.BuscarTodasPessoas(nome);
 
@@ -120,7 +119,7 @@ namespace AniverioAT_CSharp_2021
             }
             else
             {
-                Console.WriteLine("");
+                Console.WriteLine(" ");
                 Console.WriteLine("Pesssoas Encontradas: ");
 
                 foreach (var pessoa in listaDePessoasEncontradas)
@@ -128,7 +127,7 @@ namespace AniverioAT_CSharp_2021
                     Console.WriteLine(pessoa.Id + " - " + pessoa._nome + " " + pessoa._sobreNome);
                 }
 
-                Console.WriteLine("");
+                Console.WriteLine(" ");
                 Console.WriteLine("Digite o numero ID correspondente para ver mais detalhes: ");
                 int escolha = int.Parse(Console.ReadLine());
 
@@ -142,13 +141,12 @@ namespace AniverioAT_CSharp_2021
                 }
             }
             VoltarProMenu();
-
         }
 
         private static void EditarPessoa()
         {
             Console.Clear();
-            Console.WriteLine("Digite o nome da pessoa que deseja editar:");
+            Console.WriteLine("Digite o nome da pessoa que deseja editar: ");
             string[] nomeESobrenome = Console.ReadLine().Split(' ');
             string nome = nomeESobrenome[0];
 
@@ -161,7 +159,7 @@ namespace AniverioAT_CSharp_2021
             }
             else
             {
-                Console.WriteLine("");
+                Console.WriteLine(" ");
                 Console.WriteLine("Pesssoas encontradas: ");
 
                 foreach (var pessoa in listaDePessoasEncontradas)
@@ -169,7 +167,7 @@ namespace AniverioAT_CSharp_2021
                     Console.WriteLine(pessoa.Id + " - " + pessoa._nome + " " + pessoa._sobreNome);
                 }
 
-                Console.WriteLine("");
+                Console.WriteLine(" ");
                 Console.WriteLine("Digite o numero correspondente a pessoa que deseja editar: ");
                 int escolha = int.Parse(Console.ReadLine());
 
@@ -177,16 +175,16 @@ namespace AniverioAT_CSharp_2021
                 {
                     if (pessoa.Id == escolha)
                     {
-                        Pessoa pessoaVelha = Repositorio.BuscarPessoaPorId(escolha);
+                        Pessoa pessoaEscolhida = Repositorio.BuscarPessoaPorId(escolha);
                         Console.WriteLine("Digite o novo nome: ");
-                        String nomeT = Console.ReadLine();
+                        String nomeN = Console.ReadLine();
                         Console.WriteLine("Digite o novo Sobrenome: ");
-                        String sobrenomeT = Console.ReadLine();
-                        DateTime aniversarioN = RecebeETransformaData();
+                        String sobrenomeN = Console.ReadLine();
+                        DateTime novoAniversario = RecebeETransformaData();
 
-                        Pessoa pessoaNova = new Pessoa(pessoaVelha.Id, nomeT, sobrenomeT, aniversarioN);
+                        Pessoa pessoaN = new Pessoa(pessoaEscolhida.Id, nomeN, sobrenomeN, novoAniversario);
 
-                        Repositorio.Editar(pessoaNova);
+                        Repositorio.Editar(pessoaN);
 
                         Console.WriteLine("Pessoa alterada!");
                     }
@@ -293,8 +291,7 @@ namespace AniverioAT_CSharp_2021
                 VoltarProMenu();
             }
         }
-
-        private static IRepositorio Repositorio = new Repositorio();
+        private static readonly IRepositorio Repositorio = new Repositorio();
     }
 }
 
