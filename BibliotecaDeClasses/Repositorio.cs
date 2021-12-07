@@ -47,22 +47,22 @@ namespace BibliotecaDeClasses
             //retornar a lista
             return listaPessoasEncontradas;
         }
-
-        public void Deletar(int id)
+        public void CadastrarPessoa(Pessoa pessoa)
         {
-            var todasPessoas = BuscarTodasPessoas();
-            List<Pessoa> listaPessoasAtt = new List<Pessoa>();
-            foreach (var pessoa in todasPessoas)
-            {
-                if (id != pessoa.Id)
-                {
-                    listaPessoasAtt.Add(pessoa);
-                }
-                else
-                {
-                }
-            }
-            ApagaRecebeECria(listaPessoasAtt);
+            string arquivo = RecebeArquivo();
+
+            string formatacao = $"{pessoa.Id},{pessoa._nome},{pessoa._sobreNome},{pessoa._birth};";
+
+            File.AppendAllText(arquivo, formatacao);
+        }
+        public string RecebeArquivo()
+        {
+            var pasta = Environment.SpecialFolder.Desktop;
+
+            string pastaNoDesktop = Environment.GetFolderPath(pasta);
+            string nomeDoArquivo = @"\repositorioPessoas.txt";
+
+            return pastaNoDesktop + nomeDoArquivo;
         }
 
         public void Editar(Pessoa p)
@@ -83,13 +83,30 @@ namespace BibliotecaDeClasses
             ApagaRecebeECria(listaPessoasAtt);
         }
 
+        public void Deletar(int id)
+        {
+            var todasPessoas = BuscarTodasPessoas();
+            List<Pessoa> listaPessoasAtt = new List<Pessoa>();
+            foreach (var pessoa in todasPessoas)
+            {
+                if (id != pessoa.Id)
+                {
+                    listaPessoasAtt.Add(pessoa);
+                }
+                else
+                {
+                }
+            }
+            ApagaRecebeECria(listaPessoasAtt);
+        }       
+
         public IEnumerable<Pessoa> BuscarTodasPessoas(string nome)
         {
             return (from x in BuscarTodasPessoas()
                     where x._nome.Contains(nome, StringComparison.InvariantCultureIgnoreCase)
                     orderby x._nome
                     select x);
-        }
+        }        
 
         public IEnumerable<Pessoa> BuscarTodasPessoas(DateTime data)
         {
@@ -99,21 +116,12 @@ namespace BibliotecaDeClasses
                     select x);
         }
 
-        public void ApagaRecebeECria(List<Pessoa> listaPessoasAtt)
+        public Pessoa BuscarPessoaPorId(int id)
         {
-            string nomeDoArquivo = RecebeArquivo();
-            File.Delete(RecebeArquivo());
-            FileStream arquivo;
-            if (!File.Exists(nomeDoArquivo))
-            {
-                arquivo = File.Create(nomeDoArquivo);
-                arquivo.Close();
-            }
 
-            foreach (var pessoa in listaPessoasAtt)
-            {
-                Salvar(pessoa);
-            }
+            return (from x in BuscarTodasPessoas()
+                    where x.Id == id
+                    select x).FirstOrDefault();
         }
 
         public void Salvar(Pessoa pessoa)
@@ -137,33 +145,23 @@ namespace BibliotecaDeClasses
             }
         }
 
-        public Pessoa BuscarPessoaPorId(int id)
+        public void ApagaRecebeECria(List<Pessoa> listaPessoasAtt)
         {
+            string nomeDoArquivo = RecebeArquivo();
+            File.Delete(RecebeArquivo());
+            FileStream arquivo;
+            if (!File.Exists(nomeDoArquivo))
+            {
+                arquivo = File.Create(nomeDoArquivo);
+                arquivo.Close();
+            }
 
-            return (from x in BuscarTodasPessoas()
-                    where x.Id == id
-                    select x).FirstOrDefault();
-        }
-
-        public string RecebeArquivo()
-        {
-            var pasta = Environment.SpecialFolder.Desktop;
-
-            string pastaNoDesktop = Environment.GetFolderPath(pasta);
-            string nomeDoArquivo = @"\repositorioPessoas.txt";
-
-            return pastaNoDesktop + nomeDoArquivo;
-        }
-
-        public void CadastrarPessoa(Pessoa pessoa)
-        {
-            string arquivo = RecebeArquivo();
-
-            string formatacao = $"{pessoa.Id},{pessoa._nome},{pessoa._sobreNome},{pessoa._birth};";
-
-            File.AppendAllText(arquivo, formatacao);
-        }
-
+            foreach (var pessoa in listaPessoasAtt)
+            {
+                Salvar(pessoa);
+            }
+        }  
+        
         public void MostrarPessoas()
         {
             string arquivo = RecebeArquivo();
