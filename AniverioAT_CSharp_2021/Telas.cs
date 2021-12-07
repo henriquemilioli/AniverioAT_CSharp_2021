@@ -108,8 +108,8 @@ namespace AniverioAT_CSharp_2021
         {
             Console.Clear();
             Console.WriteLine("Digite o nome da pessoa que deseja buscar:");
-            string[] nomeESobrenome = Console.ReadLine().Split(' ');
-            string nome = nomeESobrenome[0];
+            string[] nomePessoa = Console.ReadLine().Split(' ');
+            string nome = nomePessoa[0];
 
 
             var listaDePessoasEncontradas = Repositorio.BuscarTodasPessoas(nome);
@@ -247,7 +247,7 @@ namespace AniverioAT_CSharp_2021
                 Console.WriteLine("");
                 foreach (var pessoa in Repositorio.BuscarTodasPessoas())
                 {
-                    Console.WriteLine(" - " + pessoa._nome + " , " + pessoa._sobreNome + " aniversaria em: " + pessoa._birth);
+                    Console.WriteLine(" - " + pessoa._nome + " , " + pessoa._sobreNome + " aniversaria em: " + pessoa._nascimento);
                 }
             }
             else

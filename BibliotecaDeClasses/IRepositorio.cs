@@ -6,11 +6,13 @@ namespace BibliotecaDeClasses
 {
     public interface IRepositorio
     {
-        IEnumerable<Pessoa> BuscarTodasPessoas();
-
-        void Deletar(int id);
+        void CadastrarPessoa(Pessoa pessoa);
 
         void Editar(Pessoa p);
+
+        IEnumerable<Pessoa> BuscarTodasPessoas();
+
+        void Deletar(int id);        
 
         IEnumerable<Pessoa> BuscarTodasPessoas(string nome);
 
@@ -26,10 +28,9 @@ namespace BibliotecaDeClasses
 
         string RecebeArquivo();
 
-        void CadastrarPessoa(Pessoa pessoa);
+        
 
         void MostrarPessoas();
-
         
     }
 }

@@ -47,14 +47,16 @@ namespace BibliotecaDeClasses
             //retornar a lista
             return listaPessoasEncontradas;
         }
+
         public void CadastrarPessoa(Pessoa pessoa)
         {
-            string arquivo = RecebeArquivo();
+            string file = RecebeArquivo();
 
-            string formatacao = $"{pessoa.Id},{pessoa._nome},{pessoa._sobreNome},{pessoa._birth};";
+            string format = $"{pessoa.Id},{pessoa._nome},{pessoa._sobreNome},{pessoa._nascimento};";
 
-            File.AppendAllText(arquivo, formatacao);
+            File.AppendAllText(file, format);
         }
+
         public string RecebeArquivo()
         {
             var pasta = Environment.SpecialFolder.Desktop;
@@ -111,8 +113,8 @@ namespace BibliotecaDeClasses
         public IEnumerable<Pessoa> BuscarTodasPessoas(DateTime data)
         {
             return (from x in BuscarTodasPessoas()
-                    where x._birth.Day == data.Day && x._birth.Month == data.Month
-                    orderby x._birth
+                    where x._nascimento.Day == data.Day && x._nascimento.Month == data.Month
+                    orderby x._nascimento
                     select x);
         }
 

@@ -12,7 +12,7 @@ namespace BibliotecaDeClasses
         public string _nome { get; set; }
         public string _sobreNome { get; set; }
         [DataType(DataType.Date)]
-        public DateTime _birth { get; set; }
+        public DateTime _nascimento { get; set; }
 
         
         public Pessoa(int id, String Nome, String Sobrenome, DateTime data)
@@ -20,20 +20,20 @@ namespace BibliotecaDeClasses
             Id = id;
             _nome = Nome;
             _sobreNome = Sobrenome;
-            _birth = data;
+            _nascimento = data;
         }
 
         public Pessoa(String Nome, String Sobrenome, DateTime data)
         {
             _nome = Nome;
             _sobreNome = Sobrenome;
-            _birth = data;
+            _nascimento = data;
         }
 
         public int QntosDiasFaltam()
         {
             DateTime today = DateTime.Today;
-            DateTime niver = new DateTime(today.Year, _birth.Month, _birth.Day);
+            DateTime niver = new DateTime(today.Year, _nascimento.Month, _nascimento.Day);
 
             if (niver < today)
             {
@@ -43,10 +43,11 @@ namespace BibliotecaDeClasses
             int diasFaltantes = (niver - today).Days;
             return diasFaltantes;
         }
+
         public override string ToString()
         {
             return " Nome Completo: " + _nome + _sobreNome +
-                   "\n Data do Aniversario: " + _birth.Day + "/" + _birth.Month + "/" + _birth.Year
+                   "\n Data do Aniversario: " + _nascimento.Day + "/" + _nascimento.Month + "/" + _nascimento.Year
                    + "\n Faltam " + QntosDiasFaltam() + " dias para esse aniversario";
         }
     }
