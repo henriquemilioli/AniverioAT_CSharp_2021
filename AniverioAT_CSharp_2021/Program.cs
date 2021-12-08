@@ -7,6 +7,7 @@ namespace AniverioAT_CSharp_2021
         static void Main(string[] args)
         {
             Telas.ShowSimplePercentage();            
+            Console.ReadKey();
             Telas.MenuPrincipal();             
         }
     }

@@ -14,11 +14,32 @@ namespace AniverioAT_CSharp_2021
         {
             for (int i = 0; i <= 100; i++)
             {
-                Console.Write($"\rProgress: {i}%   ");
-                Thread.Sleep(40);
-            }            
+                Console.Write($"\rCARREGANDO... {i}%   ");
+                Thread.Sleep(40);                
+            }
+            Console.Write("\r        Pronto!          ");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Aperte qualquer tecla para continuar!");
+            Console.ResetColor();
         }
-        
+        public static void ShowSpinner()
+        {
+            var counter = 0;
+            for (int i = 0; i < 50; i++)
+            {
+                switch (counter % 4)
+                {
+                    case 0: Console.Write("/"); break;
+                    case 1: Console.Write("-"); break;
+                    case 2: Console.Write("\\"); break;
+                    case 3: Console.Write("|"); break;
+                }
+                Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);
+                counter++;
+                Thread.Sleep(1);
+            }
+        }
+
         public static void MenuPrincipal()
         {           
             Console.Clear();            
