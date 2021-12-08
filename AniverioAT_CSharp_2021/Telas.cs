@@ -12,10 +12,12 @@ namespace AniverioAT_CSharp_2021
     {
         public static void ShowSimplePercentage()
         {
+            
             for (int i = 0; i <= 100; i++)
             {
                 Console.Write($"\rCARREGANDO... {i}%   ");
-                Thread.Sleep(40);                
+                Thread.Sleep(10);
+                ShowSpinner();
             }
             Console.Write("\r        Pronto!          ");
             Console.ForegroundColor = ConsoleColor.Red;
@@ -25,7 +27,7 @@ namespace AniverioAT_CSharp_2021
         public static void ShowSpinner()
         {
             var counter = 0;
-            for (int i = 0; i < 50; i++)
+            for (int i = 0; i < 10; i++)
             {
                 switch (counter % 4)
                 {
@@ -36,7 +38,7 @@ namespace AniverioAT_CSharp_2021
                 }
                 Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);
                 counter++;
-                Thread.Sleep(1);
+                Thread.Sleep(10);
             }
         }
 
